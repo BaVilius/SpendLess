@@ -16,12 +16,6 @@ namespace ExpensesTracker.Server.Controllers
     public class GoalsController : ControllerBase
     {
         private readonly IGoal _goals;
-        static int currentCount = 0; // amomunt of times the button Order was pressed
-
-        private static int _year;
-        private static int _month;
-        private static int _categoryId;
-
 
         public GoalsController(IGoal _goals)
         {
@@ -37,7 +31,6 @@ namespace ExpensesTracker.Server.Controllers
         [HttpGet("currentCount")] // http methods should all be different, otherwise: The request matched multiple endpoints
         public async Task<ActionResult<List<Goal>>> GetOrderedGoals()
         {
-            currentCount++;
             return Ok(await GetFilteredGoals());
         }
 

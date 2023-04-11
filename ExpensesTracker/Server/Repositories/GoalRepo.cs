@@ -25,6 +25,8 @@ namespace ExpensesTracker.Server.Repositories
             context.AllGoals.Remove(goal);
             await context.SaveChangesAsync();
 
+
+
             return goal;
         }
 
