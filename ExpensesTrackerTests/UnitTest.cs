@@ -8,7 +8,7 @@ namespace ExpensesTrackerTests
         {
             Assert.AreEqual(1, 1);
 
-            // Assert.AreEqual(1, 2); uncomment to fail tests
+            Assert.AreEqual(1, 2);
         }
     }
 }
