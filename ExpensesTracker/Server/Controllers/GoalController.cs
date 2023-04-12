@@ -63,6 +63,8 @@ namespace ExpensesTracker.Server.Controllers
             await _goals.DeleteGoalAsync(dbGoal.Value);
 
             return Ok(await GetFilteredGoals());
+
+
         }
 
         async Task<List<Goal>> GetFilteredGoals()
