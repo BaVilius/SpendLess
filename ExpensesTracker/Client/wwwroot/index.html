@@ -19,19 +19,57 @@
 <body>
     <div id="app">Loading...</div>
 
+    <!--<div id="chartContainer" style="height: 400px; width: 60%;"></div>-->
+
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <script src="_content/Plotly.Blazor/plotly-latest.min.js" type="text/javascript"></script>
+    <script src="_content/Plotly.Blazor/plotly-interop.js" type="text/javascript"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <!-- This is the glue between Blazor and Chart.js -->
+    <script src="_content/ChartJs.Blazor.Fork/ChartJsBlazorInterop.js"></script>
+
+    <!--<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/Chart.js"></script>
     <script src="js/DisposeChart.js"></script>
 
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+    <!--<script type="text/javascript">
+
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "My First Chart in ASP.NET MVC"
+                },
+                data: [
+                    {
+                        // Change type to "doughnut", "line", "splineArea", etc.
+                        type: "column",
+                        dataPoints: [
+                            { label: "apple", y: 10 },
+                            { label: "orange", y: 15 },
+                            { label: "banana", y: 25 },
+                            { label: "mango", y: 30 },
+                            { label: "grape", y: 28 }
+                        ]
+                    }
+                ]
+            });
+            chart.render();
+        }
+    </script>
+
+    <div id="chartContainer" style="height: 400px; width: 60%;"></div>-->
 </body>
 
 </html>

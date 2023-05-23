@@ -1,0 +1,105 @@
+﻿@page "/stock"
+@page "/Stock/{id:int}"
+@using ExpensesTracker.Client.Services.StockService;
+@using System.Web.Helpers;
+@inject IStockService StockService
+@inject NavigationManager NavigationManager
+
+<h1>@StockService.singleStock.Ticker</h1>
+
+<PlotlyChart @bind-Config="config" @bind-Layout="layout" @bind-Data="data" @ref="chart"/>
+
+<EditForm Model="StockService.singleStock" OnValidSubmit="@Submit">
+	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-danger" @onclick="GoBack"> Cancel</button>
+</EditForm>
+
+
+@code {
+	[CascadingParameter]
+	public Error Error { get; set; }
+
+	[Parameter]
+	public int? Id { get; set; }
+
+	private static Random rnd = new Random();
+
+	PlotlyChart chart;
+	Config config = new Config();
+	Layout layout = new Layout();
+
+
+	IList<ITrace> data { get; set; } = new List<ITrace>
+	{
+			new Scatter()
+				{
+					Name = "ScatterTrace",
+					X = new List<object> { DateTime.Now.Day - 6, DateTime.Now.Day - 5, DateTime.Now.Day - 4, DateTime.Now.Day - 3, DateTime.Now.Day - 2, DateTime.Now.Day - 1, DateTime.Now.Day },
+					Y = new List<object> { 100 + (100 * (rnd.Next() % 10 - 5) / 75), 100 + (100 * (rnd.Next() % 10 - 5) / 75),
+					100 + (100 * (rnd.Next() % 10 - 5) / 75), 100 + (100 * (rnd.Next() % 10 - 5) / 75), 100 + (100 * (rnd.Next() % 10 - 5) / 75), 100 + (100 * (rnd.Next() % 10 - 5) / 75), 100},
+				}
+		};
+
+
+	protected override async void OnInitialized()
+	{
+		var currDay = DateTime.Now.Day;
+		var currPrice = StockService.singleStock.Price;
+
+		data = new List<ITrace>
+		{
+			new Scatter()
+				{
+					Name = "ScatterTrace",
+					X = new List<object> { currDay - 6, currDay - 5, currDay - 4, currDay - 3, currDay - 2, currDay - 1, currDay },
+					Y = new List<object> { currPrice + (100 * (rnd.Next() % 10 - 5) / 75), currPrice + (100 * (rnd.Next() % 10 - 5) / 75),
+					currPrice + (100 * (rnd.Next() % 10 - 5) / 75), currPrice + (100 * (rnd.Next() % 10 - 5) / 75), currPrice + (100 * (rnd.Next() % 10 - 5) / 75), currPrice + (100 * (rnd.Next() % 10 - 5) / 75), currPrice},
+				}
+		};
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		try
+		{
+			StockService.singleStock = await StockService.GetSingleStock((int)Id);
+			
+		}
+		catch (System.Exception ex)
+		{
+			Error.ProcessError(ex);
+		}
+	}
+
+	public async void GoBack()
+	{
+		if(StockService.singleStock.Id == -1)
+		{
+			var dummyStock = await StockService.GetSingleStock(-1);
+			if (dummyStock != null)
+				await StockService.DeleteStock(-1);
+		}
+		
+		NavigationManager.NavigateTo("/stocks");
+	}
+
+	async Task Submit()
+	{
+
+		if (StockService.singleStock.Id == -1)
+		{
+			var dummyStock = await StockService.GetSingleStock(-1);
+			if (dummyStock != null)
+				await StockService.DeleteStock(-1);
+		}
+		
+		var stock = new Stock()
+			{
+				Title = StockService.singleStock.Title,
+				Price = StockService.singleStock.Price,
+				Ticker = StockService.singleStock.Ticker,
+
+			};
+		await StockService.CreateStock(stock);
+	}
+}

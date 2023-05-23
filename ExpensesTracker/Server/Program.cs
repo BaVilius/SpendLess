@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IExpense, ExpenseRepo>();
 builder.Services.AddScoped<IIncome, IncomeRepo>();
 builder.Services.AddScoped<IGoal, GoalRepo>();
+builder.Services.AddScoped<IStock, StockRepo>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
 
 
@@ -56,3 +57,5 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+public partial class Program{ }
