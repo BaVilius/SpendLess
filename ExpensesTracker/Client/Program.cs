@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.Toast;
 using ExpensesTracker.Client.Services.GoalService;
+using ExpensesTracker.Client.Services.StockService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IExpensesService, ExpensesService>(); // whenever som
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IIncomesService, IncomesService>();
 builder.Services.AddScoped<IGoalService, GoalService>();
+builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddBlazoredToast();
 
 

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpensesTracker.Client", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpensesTracker.Shared", "ExpensesTracker\Shared\ExpensesTracker.Shared.csproj", "{39D13499-D27E-482C-AA59-FEBCCE285AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpensesTrackerTests", "ExpensesTrackerTests\ExpensesTrackerTests.csproj", "{A4334749-2C03-4236-AC41-3045011A528A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpensesTrackerTests", "ExpensesTrackerTests\ExpensesTrackerTests.csproj", "{A4334749-2C03-4236-AC41-3045011A528A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

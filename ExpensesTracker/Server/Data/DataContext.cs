@@ -16,5 +16,7 @@ namespace ExpensesTracker.Server.Data
         public DbSet<Income> AllIncomes { get; set; }
 
         public DbSet<Goal> AllGoals { get; set; }
+
+        public DbSet<Stock> AllStocks { get; set; }
     }
 }

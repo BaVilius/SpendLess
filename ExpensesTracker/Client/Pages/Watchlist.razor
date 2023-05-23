@@ -1,0 +1,89 @@
+﻿@page "/stocks"
+@using ExpensesTracker.Client.Services.StockService;stock
+@inject IStockService StockService
+@inject NavigationManager NavigationManager
+@inject HttpClient http
+
+<h2>Watchlist</h2>
+
+<EditForm Model="StockService.singleStock" OnValidSubmit="@Submit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div>
+		<label for="title">STOCK SEARCH</label>
+		<InputText id="title" @bind-Value="StockService.singleStock.Title"></InputText>
+        <button type="submit" class="btn btn-primary">Search</button>
+	</div>
+</EditForm>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Current Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var Stock in StockService.AllStocks)
+        {
+            <tr>
+                <td>@Stock.Ticker</td>
+                <td>@Stock.Price.ToString()</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(() => ShowStock(Stock.Id))"><i class="oi oi-compass"></i></button>
+                    &nbsp;
+                    <button class="btn btn-danger" @onclick="(() => DeleteStock(Stock.Id))">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await StockService.GetStocks();
+    }
+
+    public void GoBack()
+    {
+        NavigationManager.NavigateTo("/stocks");
+    }
+
+    async Task Submit()
+    {
+        var searchString = StockService.singleStock.Title;
+        var stock = await StockService.SearchStock(searchString);
+        if(stock.Price <= 0)
+        {
+            NavigationManager.NavigateTo("/notFound");
+        }
+        else
+        {
+            await StockService.CreateStock(stock);
+            NavigationManager.NavigateTo($"Stock/{-1}");
+        }
+    }
+
+    async Task ShowStock(int id)
+    {
+        var stockToShow = await StockService.GetSingleStock(id);
+        StockService.singleStock.Price = stockToShow.Price;
+
+        NavigationManager.NavigateTo($"Stock/{id}");
+    }
+
+    void CreateStock()
+    {
+        NavigationManager.NavigateTo("/stock");
+    }
+
+    async Task DeleteStock(int id)
+    {
+        await StockService.DeleteStock(id);
+    }
+}
